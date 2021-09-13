@@ -6,6 +6,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./reducers/index";
 import App from "./App";
+import dotenv from "dotenv";
+dotenv.config({});
 axios.defaults.baseURL = "http://localhost:8000/api/v3";
 
 const strore = createStore(reducers, compose(applyMiddleware(thunk)));

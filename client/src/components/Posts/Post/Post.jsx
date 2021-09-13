@@ -1,13 +1,43 @@
-import React from "react";
+import React, { useCallback } from "react";
 import useStyles from "./styles";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from "@material-ui/core";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import DeleteIcon from "@material-ui/icons/Delete";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
-const Post = () => {
+const Post = ({ post }) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <h1>Post</h1>
-    </div>
+    <Card className={classes.card}>
+      <CardMedia
+        className={classes.media}
+        image={`http://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/v1/${post.selectedFile}`}
+        title={post.title}
+      />
+
+      <div className={classes.overlay}>
+        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="body2">
+          {dayjs(post.createdAt).fromNow()}
+        </Typography>
+      </div>
+      <div className={classes.overlay2}>
+        <Button style={{ color: "white" }} size="small">
+          <MoreHorizIcon fontSize="default" />
+        </Button>
+      </div>
+    </Card>
   );
 };
 
