@@ -1,4 +1,5 @@
 import PostMemories from "../models/post.model";
+import clodinary from "cloudinary";
 export const getPost = async (req, res) => {
   try {
     const posts = await PostMemories.find().sort({ createdAt: "desc" });
@@ -11,8 +12,18 @@ export const getPost = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const body = req.body;
-    const new_post = await PostMemories.create(body);
+    const { title, creator, message, tags, selectedFile } = req.body;
+    const { public_id } = await clodinary.v2.uploader.upload(selectedFile, {
+      upload_preset: "memories_preset",
+    });
+    const newPost = {
+      title,
+      creator,
+      message,
+      tags,
+      selectedFile: public_id,
+    };
+    const new_post = await PostMemories.create(newPost);
     res.status(201).json(new_post);
   } catch (error) {
     res.status(409).send({ msg: error.message });
