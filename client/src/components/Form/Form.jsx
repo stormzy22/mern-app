@@ -1,11 +1,11 @@
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Filebase from "react-file-base64";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/posts.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, updatePost } from "../../actions/posts.actions";
 import useStyles from "./styles";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -14,8 +14,15 @@ const Form = () => {
     tags: "",
   });
 
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
 
   //Handle Input
   const handleInput = (e) => {
@@ -24,7 +31,11 @@ const Form = () => {
   //Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
   };
 
   const clear = () => {
@@ -86,9 +97,9 @@ const Form = () => {
           <Filebase
             type="file"
             multiple={false}
-            onDone={({ base64 }) =>
-              setPostData({ ...postData, selectedFile: base64 })
-            }
+            onDone={({ base64 }) => {
+              setPostData({ ...postData, selectedFile: base64 });
+            }}
           />
         </div>
         <Button

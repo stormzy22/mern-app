@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import reducers from "./reducers/index";
 import App from "./App";
 import dotenv from "dotenv";
+import "./index.css";
 dotenv.config({});
 axios.defaults.baseURL = "http://localhost:8000/api/v3";
 
