@@ -13,10 +13,14 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../../actions/posts.actions";
+
 dayjs.extend(relativeTime);
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
+  const diapatch = useDispatch();
 
   return (
     <Card className={classes.card}>
@@ -48,9 +52,12 @@ const Post = ({ post, setCurrentId }) => {
           {post.tags.map((tag) => `#${tag} `)}
         </Typography>
       </div>
+      <Typography variant="h5" className={classes.title} gutterBottom>
+        {post.title}
+      </Typography>
       <CardContent>
-        <Typography variant="h5" className={classes.title} gutterBottom>
-          {post.title}
+        <Typography variant="h5" gutterBottom>
+          {post.message}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
@@ -59,7 +66,11 @@ const Post = ({ post, setCurrentId }) => {
           Like
           {post.likeCount}
         </Button>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => diapatch(deletePost(post._id))}
+        >
           <DeleteIcon fontSize="small" />
           Delete
         </Button>

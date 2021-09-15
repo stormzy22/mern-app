@@ -28,17 +28,9 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleInput = (e) => {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   };
-  //Handle Form Submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (currentId) {
-      dispatch(updatePost(currentId, postData));
-    } else {
-      dispatch(createPost(postData));
-    }
-  };
-
+  // clear PostData
   const clear = () => {
+    setCurrentId(null);
     setPostData({
       ...postData,
       creator: "",
@@ -48,6 +40,17 @@ const Form = ({ currentId, setCurrentId }) => {
       tags: "",
     });
   };
+  //Handle Form Submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
+    clear();
+  };
+
   return (
     <Paper className={classes.paper}>
       <form
@@ -56,7 +59,9 @@ const Form = ({ currentId, setCurrentId }) => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Creating a Memory</Typography>
+        <Typography variant="h6">
+          {currentId ? "Editing" : "Creating"} a Memory
+        </Typography>
         <TextField
           name="creator"
           variant="outlined"

@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { UserModel } from "../../post";
+import { UserModel } from "../types/types";
 
-const postSchema = new Schema({
+const postSchema = new Schema<UserModel>({
   title: String,
   message: String,
   creator: String,

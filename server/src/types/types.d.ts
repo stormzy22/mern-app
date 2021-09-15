@@ -7,8 +7,8 @@ interface Post {
   creator: string;
   tags: string[];
   likeCount: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date | Date.now;
+  updatedAt: Date | Date.now;
   selectedFile: string;
 }
 
