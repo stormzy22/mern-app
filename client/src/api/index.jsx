@@ -6,3 +6,4 @@ export const updatePost = (id, updatedPost) => {
   axios.patch(`/${id}`, updatedPost);
 };
 export const deletePost = (id) => axios.delete(`/${id}`);
+export const likePost = (id) => axios.patch(`/${id}/likePost`);

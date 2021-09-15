@@ -14,7 +14,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useDispatch } from "react-redux";
-import { deletePost } from "../../../actions/posts.actions";
+import { deletePost, likePost } from "../../../actions/posts.actions";
 
 dayjs.extend(relativeTime);
 
@@ -56,15 +56,18 @@ const Post = ({ post, setCurrentId }) => {
         {post.title}
       </Typography>
       <CardContent>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="body2" color="textSecondary" component="p">
           {post.message}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => diapatch(likePost(post._id))}
+        >
           <ThumbUpAltIcon fontSize="small" />
-          Like
-          {post.likeCount}
+          &nbsp;Like&nbsp;{post.likeCount}
         </Button>
         <Button
           size="small"

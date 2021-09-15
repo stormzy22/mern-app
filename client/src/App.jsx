@@ -17,13 +17,13 @@ const App = () => {
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">
         <Typography className={classes.heading} variant="h2" align="center">
-          Memories
+          Mems
         </Typography>
         <img
-          src="/images/memories.png"
+          src="/images/favicon.ico"
           alt="memories_logo"
-          width="180"
-          height="60"
+          width="100"
+          height="100"
           className={classes.image}
         />
       </AppBar>
@@ -31,6 +31,7 @@ const App = () => {
         <Container>
           <Grid
             container
+            className={classes.mainContainer}
             justifyContent="space-between"
             alignItems="stretch"
             spacing={3}

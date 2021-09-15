@@ -21,6 +21,7 @@ export const createPost = async (
 ): Promise<void> => {
   try {
     const { title, creator, message, tags, selectedFile } = req.body;
+    console.log(req.body);
     const public_id = await uploadImgToCloud(selectedFile);
     const newPost = {
       title,
@@ -88,6 +89,31 @@ export const deletePost = async (
     console.log("DELETED");
 
     res.json({ message: "Post deleted successfully." });
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+// LIKE POST
+export const likePost = async (
+  req: Request,
+  res: Response
+): Promise<unknown> => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error(`${id} is not a valid ID`);
+    }
+    const post = await PostMemories.findById(id);
+    if (post) {
+      const updatedPost = await PostMemories.findByIdAndUpdate(id, {
+        likeCount: post?.likeCount + 1,
+      });
+      const newUpdatedPost = await PostMemories.findOne({
+        _id: updatedPost?._id,
+      });
+      return res.json(newUpdatedPost);
+    }
   } catch (error) {
     console.log(error);
     res.json(error);
