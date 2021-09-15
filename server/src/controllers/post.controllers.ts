@@ -2,6 +2,7 @@ import PostMemories from "../models/post.model";
 import { Request, Response, NextFunction } from "express";
 import cloudinary from "cloudinary";
 import { uploadImgToCloud } from "../helpers/upload.cloudinary";
+import { UserModel } from "../../post";
 
 export const getPost = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -40,18 +41,26 @@ export const updatePost = async (
   res: Response
 ): Promise<unknown> => {
   try {
-    const validId = await PostMemories.findById(req.params.id);
-    if (!validId) {
+    const validPost = await PostMemories.findById(req.params.id);
+    if (!validPost) {
       return res.status(404).send("No post with that id");
     }
-    const checkFile = await cloudinary.v2.api.resource(req.body.selectedFile);
-    console.log(checkFile);
+    if (validPost.selectedFile !== req.body.selectedFile) {
+      await cloudinary.v2.uploader.destroy(validPost.selectedFile);
+      const public_id = await uploadImgToCloud(req.body.selectedFile);
+      const updatedPost = await PostMemories.findOneAndUpdate(
+        { _id: req.params.id },
+        { ...req.body, selectedFile: public_id },
+        { new: true }
+      );
+      return res.json(updatedPost);
+    }
     const updatedPost = await PostMemories.findOneAndUpdate(
       { _id: req.params.id },
-      req.body,
+      { ...req.body },
       { new: true }
     );
-    res.json(updatedPost);
+    return res.json(updatedPost);
   } catch (error: any) {
     res.status(404).send({ msg: error.message });
     console.log(error);

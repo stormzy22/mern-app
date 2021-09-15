@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { UserModel } from "../../post";
 
 const postSchema = new Schema({
   title: String,
@@ -20,4 +21,4 @@ const postSchema = new Schema({
   },
 });
 
-export default model("post", postSchema);
+export default model<UserModel>("post", postSchema);
