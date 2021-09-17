@@ -9,7 +9,7 @@ import App from "./App";
 import dotenv from "dotenv";
 import "./index.css";
 dotenv.config({});
-axios.defaults.baseURL = "https://crud-app-server.herokuapp.com/api/v3";
+axios.defaults.baseURL = process.env.REACT_APP_AXIOS_BASE_URL;
 
 const strore = createStore(reducers, compose(applyMiddleware(thunk)));
 
