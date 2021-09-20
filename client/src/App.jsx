@@ -5,6 +5,7 @@ import Form from "./components/Form/Form";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 import { getPosts } from "./actions/posts.actions";
+import Navbar from "./components/Navbar/Navbar";
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
@@ -15,18 +16,7 @@ const App = () => {
   }, [currentId, dispatch]);
   return (
     <Container maxWidth="lg">
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} variant="h2" align="center">
-          Mems
-        </Typography>
-        <img
-          src="/images/favicon.ico"
-          alt="memories_logo"
-          width="100"
-          height="100"
-          className={classes.image}
-        />
-      </AppBar>
+      <Navbar />
       <Grow in>
         <Container>
           <Grid
