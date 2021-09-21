@@ -15,6 +15,7 @@ const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPas
         label={label}
         autoFocus={autoFocus}
         type={type}
+        autoComplete={type === "password" ? "off" : "on"}
         InputProps={
           name === "password"
             ? {

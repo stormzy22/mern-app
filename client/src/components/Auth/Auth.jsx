@@ -28,6 +28,7 @@ const Auth = () => {
     const result = res?.profileObj;
     const token = res?.tokenId;
     try {
+      dispatch({ type: "AUTH", data: { result, token } });
     } catch (error) {
       console.log(error);
     }
