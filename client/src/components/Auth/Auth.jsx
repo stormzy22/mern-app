@@ -7,18 +7,36 @@ import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import Input from "./Input";
 import Icon from "./Icon";
+import { signin, signup } from "../../actions/auth.actions";
+
+const initialFormData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const Auth = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState(initialFormData);
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
   };
-  const handleChange = () => {};
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleShowPassword = () => setShowPassword(!showPassword);
   const switchMode = () => {
     setIsSignup(!isSignup);
@@ -38,7 +56,7 @@ const Auth = () => {
   };
   const googleFailure = (error) => {
     console.log(error);
-    console.error("Google Sign In was unsuccessful. Try Again Later ");
+    console.log("Google Sign In was unsuccessful. Try Again Later ");
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -52,7 +70,7 @@ const Auth = () => {
             {isSignup && (
               <>
                 <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
-                <Input name="firstName" label="First Name" handleChange={handleChange} half />
+                <Input name="lastName" label="Last Name" handleChange={handleChange} half />
               </>
             )}
             <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
@@ -63,7 +81,7 @@ const Auth = () => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
-            {isSignup && <Input name="confirmPassword" label="Repeat Password" type="password" />}
+            {isSignup && <Input name="confirmPassword" label="Repeat Password" type="password" handleChange={handleChange} />}
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {isSignup ? "Sign Up" : "Sign In"}
