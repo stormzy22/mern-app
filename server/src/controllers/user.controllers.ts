@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../@types/types";
 import User from "../models/user.model";
+import { OAuth2Client } from "google-auth-library";
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const jwtSecrete = process.env.JWT_SECRETE || "test";
 
@@ -31,6 +33,20 @@ export const signUp = async (req: Request, res: Response): Promise<unknown> => {
     const new_user = await User.create({ name: `${firstName} ${lastName}`, email, password: hashed_password });
     const token = jwt.sign({ email: new_user.email, _id: new_user._id }, jwtSecrete, { expiresIn: "1d" });
     res.status(200).json({ result: new_user, token });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong 😃" });
+    console.log(error);
+  }
+};
+
+export const googleAuth = async (req: Request, res: Response): Promise<unknown> => {
+  const { token_id } = req.body;
+  try {
+    if (!token_id) return res.status(400).json({ message: "Invalid token" });
+    const ticket = await client.verifyIdToken({ idToken: token_id, audience: process.env.GOOGLE_CLIENT_ID });
+    const payload = ticket.getPayload();
+    const email_exist = await User.findOne({ email: payload?.email });
+    if (email_exist) return res.status(400).json({ message: "User already exist." });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong 😃" });
     console.log(error);

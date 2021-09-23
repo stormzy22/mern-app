@@ -8,3 +8,4 @@ export const likePost = (id) => axios.patch(`/${id}/likePost`);
 
 export const signIn = (formData) => axios.post("/user/signin", formData);
 export const signUp = (formData) => axios.post("/user/signup", formData);
+export const googleAuth = (token) => axios.post("/user/google-o-auth", token);

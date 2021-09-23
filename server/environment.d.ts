@@ -11,6 +11,7 @@ declare global {
       CLOUDINARY_NAME: string;
       CLOUDINARY_API_KEY: string;
       CLOUDINARY_API_SECRETE: string;
+      GOOGLE_CLIENT_ID: string;
     }
   }
 }

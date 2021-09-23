@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import Input from "./Input";
 import Icon from "./Icon";
-import { signin, signup } from "../../actions/auth.actions";
+import { googleAuth, signin, signup } from "../../actions/auth.actions";
 
 const initialFormData = {
   firstName: "",
@@ -45,10 +45,9 @@ const Auth = () => {
 
   //Google
   const googleSuccess = async (res) => {
-    const result = res?.profileObj;
     const token = res?.tokenId;
     try {
-      dispatch({ type: "AUTH", data: { result, token } });
+      dispatch(googleAuth(token, history));
       history.push("/");
     } catch (error) {
       console.log(error);

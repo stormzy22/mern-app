@@ -14,9 +14,18 @@ export const signin = (formData, history) => async (dispatch) => {
 export const signup = (formData, history) => async (dispatch) => {
   try {
     const { data } = await api.signUp(formData);
-    const datas = await api.signUp(formData);
-    console.log(datas);
     dispatch({ type: AUTH, data });
+    history.push("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const googleAuth = (token, history) => async (dispatch) => {
+  console.log(token);
+  try {
+    const { data } = await api.googleAuth({ token_id: token });
+    dispatch({ type: "AUTH", data });
     history.push("/");
   } catch (error) {
     console.log(error);
