@@ -40,7 +40,7 @@ const Auth = () => {
   const handleShowPassword = () => setShowPassword(!showPassword);
   const switchMode = () => {
     setIsSignup(!isSignup);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
 
   //Google
@@ -74,13 +74,7 @@ const Auth = () => {
               </>
             )}
             <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
-            <Input
-              name="password"
-              label="Password"
-              handleChange={handleChange}
-              type={showPassword ? "text" : "password"}
-              handleShowPassword={handleShowPassword}
-            />
+            <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
             {isSignup && <Input name="confirmPassword" label="Repeat Password" type="password" handleChange={handleChange} />}
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
@@ -89,15 +83,7 @@ const Auth = () => {
           <GoogleLogin
             clientId="204955371376-0frlap23vs74lj6b7832udgvhv6hcp3d.apps.googleusercontent.com"
             render={(renderProps) => (
-              <Button
-                className={classes.googleButton}
-                color="primary"
-                fullWidth
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                startIcon={<Icon />}
-                variant="contained"
-              >
+              <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
                 Google Sign In
               </Button>
             )}
