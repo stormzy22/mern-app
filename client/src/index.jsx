@@ -10,6 +10,12 @@ import dotenv from "dotenv";
 import "./index.css";
 dotenv.config({});
 axios.defaults.baseURL = process.env.REACT_APP_AXIOS_BASE_URL;
+axios.interceptors.request.use((req) => {
+  if (localStorage.getItem("profile")) {
+    req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token}`;
+  }
+  return req;
+});
 
 const strore = createStore(reducers, compose(applyMiddleware(thunk)));
 

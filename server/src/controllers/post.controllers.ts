@@ -18,10 +18,10 @@ export const getPost = async (req: Request, res: Response): Promise<void> => {
 // CREATE POST
 export const createPost = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { title, creator, message, tags, selectedFile } = req.body;
+    const { title, creator, message, tags, selectedFile, name } = req.body;
     const public_id = await uploadImgToCloud(selectedFile);
-    const newPost = { title, creator, message, tags, selectedFile: public_id };
-    const new_post = await PostMemories.create(newPost);
+    const newPost = { title, creator, message, tags, selectedFile: public_id, name };
+    const new_post = await PostMemories.create({ ...newPost, creator: req.userId });
     res.status(201).json(new_post);
   } catch (error: any) {
     res.status(409).send({ msg: error.message });

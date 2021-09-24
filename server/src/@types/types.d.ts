@@ -11,6 +11,8 @@ interface Post {
   createdAt: Date | Date.now;
   updatedAt: Date | Date.now;
   selectedFile: string;
+  creator: string;
+  name: string;
 }
 
 interface User {
