@@ -47,7 +47,7 @@ const Auth = () => {
   const googleSuccess = async (res) => {
     const token = res?.tokenId;
     try {
-      dispatch(googleAuth(token, history));
+      dispatch(googleAuth(token, isSignup, history));
       history.push("/");
     } catch (error) {
       console.log(error);

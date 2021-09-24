@@ -23,6 +23,8 @@ interface User {
   firstName: string;
   lastName: string;
   confirmPassword: string;
+  google_id: string;
+  imageUrl: string;
 }
 export interface PostModel extends Post, Document {}
 export interface UserModel extends User, Document {}
