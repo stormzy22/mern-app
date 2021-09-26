@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-interface Post {
+export interface PostModel extends Post, Document {
   _id: string;
   title: string;
   message: string;
@@ -15,7 +15,7 @@ interface Post {
   name: string;
 }
 
-interface User {
+export interface UserModel extends User, Document {
   _id: string;
   name: string;
   email: string;
@@ -28,5 +28,3 @@ interface User {
   google_id: string;
   imageUrl: string;
 }
-export interface PostModel extends Post, Document {}
-export interface UserModel extends User, Document {}
