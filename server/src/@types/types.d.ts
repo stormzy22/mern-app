@@ -4,7 +4,7 @@ export interface PostModel extends Post, Document {
   _id: string;
   title: string;
   message: string;
-  creator: string;
+  creator: { type };
   tags: string[];
   likeCount: number;
   likes: string[];

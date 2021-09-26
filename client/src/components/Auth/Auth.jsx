@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Avatar, Button, Container, Grid, Paper, Typography } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
-import useStyles from "./styles";
-import Input from "./Input";
-import Icon from "./Icon";
+import { useHistory } from "react-router-dom";
 import { googleAuth, signin, signup } from "../../actions/auth.actions";
+import Icon from "./Icon";
+import Input from "./Input";
+import useStyles from "./styles";
 
 const initialFormData = {
   firstName: "",

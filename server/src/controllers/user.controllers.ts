@@ -43,8 +43,6 @@ export const signUp = async (req: Request, res: Response): Promise<unknown> => {
 
 export const googleAuth = async (req: Request, res: Response): Promise<unknown> => {
   const { token_id, isSignUp } = req.body;
-  console.log(isSignUp);
-
   try {
     if (!token_id) return res.status(400).json({ message: "Invalid token" });
     const ticket = await client.verifyIdToken({ idToken: token_id, audience: process.env.GOOGLE_CLIENT_ID });
@@ -68,21 +66,3 @@ export const googleAuth = async (req: Request, res: Response): Promise<unknown> 
     console.log(error);
   }
 };
-
-// {
-//   iss: 'accounts.google.com',
-//   azp: '204955371376-0frlap23vs74lj6b7832udgvhv6hcp3d.apps.googleusercontent.com',
-//   aud: '204955371376-0frlap23vs74lj6b7832udgvhv6hcp3d.apps.googleusercontent.com',
-//   sub: '108691990694896136800',
-//   email: 'aawweb23@gmail.com',
-//   email_verified: true,
-//   at_hash: '6iHyC5jugMjpy-Yd8JJc0Q',
-//   name: 'Ww E',
-//   picture: 'https://lh3.googleusercontent.com/a/AATXAJyksHKUtBR9rnuUpqySAROtwKV6HoxXXwqbSKY=s96-c',
-//   given_name: 'Ww',
-//   family_name: 'E',
-//   locale: 'en',
-//   iat: 1632474994,
-//   exp: 1632478594,
-//   jti: 'd2a8f22763e673d4886adc2138650b1fcc96f9eb'
-// }

@@ -5,7 +5,7 @@ const postSchema = new Schema<PostModel>(
   {
     title: String,
     message: String,
-    creator: String,
+    creator: { type: Schema.Types.ObjectId, ref: "User" },
     name: String,
     tags: [String],
     selectedFile: String,
@@ -14,4 +14,4 @@ const postSchema = new Schema<PostModel>(
   { timestamps: true }
 );
 
-export default model<PostModel>("post", postSchema);
+export default model<PostModel>("Post", postSchema);

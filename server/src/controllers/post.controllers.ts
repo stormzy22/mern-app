@@ -8,7 +8,7 @@ import { PostModel } from "../@types/types";
 //GET POST
 export const getPost = async (req: Request, res: Response): Promise<void> => {
   try {
-    const posts = await PostMemories.find().sort({ createdAt: "desc" });
+    const posts = await PostMemories.find().sort({ createdAt: "desc" }).populate("creator");
     res.status(200).json(posts);
   } catch (error: any) {
     res.status(404).json({ msg: error.message });
@@ -21,7 +21,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     const { title, creator, message, tags, selectedFile, name } = req.body;
     const public_id = await uploadImgToCloud(selectedFile);
     const newPost = { title, creator, message, tags, selectedFile: public_id, name };
-    const new_post = await PostMemories.create({ ...newPost, creator: req.userId });
+    const new_post = await await PostMemories.create({ ...newPost, creator: req.userId });
     res.status(201).json(new_post);
   } catch (error: any) {
     res.status(409).send({ msg: error.message });
