@@ -8,11 +8,11 @@ import { PostModel } from "../@types/types";
 //GET POST
 export const getPost = async (req: Request, res: Response): Promise<void> => {
   try {
-    const posts = await PostMemories.find().sort({ createdAt: "desc" }).populate("creator");
+    const posts = await PostMemories.find().sort({ createdAt: "desc" });
     res.status(200).json(posts);
   } catch (error: any) {
-    res.status(404).json({ msg: error.message });
-    console.log(error?.message);
+    res.status(404).json({ msg: error });
+    console.log(error);
   }
 };
 // CREATE POST
@@ -24,8 +24,8 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     const new_post = await await PostMemories.create({ ...newPost, creator: req.userId });
     res.status(201).json(new_post);
   } catch (error: any) {
-    res.status(409).send({ msg: error.message });
-    console.log(error.message);
+    res.status(409).send({ msg: error });
+    console.log(error);
   }
 };
 // UPDATE POST
@@ -48,7 +48,7 @@ export const updatePost = async (req: Request, res: Response): Promise<unknown> 
 
     res.json(updatedPost);
   } catch (error: any) {
-    res.status(400).send({ msg: error?.message });
+    res.status(400).send({ msg: error });
     console.log(error);
   }
 };
@@ -60,7 +60,6 @@ export const deletePost = async (req: Request, res: Response): Promise<unknown> 
     const find_p_id = await PostMemories.findById(id);
     if (find_p_id) await cloudinary.v2.uploader.destroy(find_p_id?.selectedFile);
     await PostMemories.findByIdAndDelete(id);
-    console.log("DELETED");
     res.json({ message: "Post deleted successfully." });
   } catch (error) {
     console.log(error);

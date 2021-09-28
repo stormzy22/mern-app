@@ -17,7 +17,7 @@ export const signIn = async (req: Request, res: Response): Promise<unknown> => {
     if (existing_user && existing_user?.google_id?.length > 1) return res.status(404).json({ message: "Pls login with google" });
     const is_password_correct = await bcrypt.compare(password, existing_user.password);
     if (!is_password_correct) return res.status(400).json({ message: "Invalid Credentials" });
-    const token = jwt.sign({ email: existing_user.email, _id: existing_user._id }, jwtSecrete, { expiresIn: "1d" });
+    const token = jwt.sign({ email: existing_user.email, _id: existing_user._id }, jwtSecrete, { expiresIn: "1h" });
     res.status(200).json({ result: existing_user, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong 😃" });
@@ -33,7 +33,7 @@ export const signUp = async (req: Request, res: Response): Promise<unknown> => {
     if (password !== confirmPassword) return res.status(400).json({ message: "Passwords don't match " });
     const hashed_password = await bcrypt.hash(password, 12);
     const new_user = await User.create({ name: `${firstName} ${lastName}`, email, password: hashed_password });
-    const token = jwt.sign({ email: new_user.email, _id: new_user._id }, jwtSecrete, { expiresIn: "1d" });
+    const token = jwt.sign({ email: new_user.email, _id: new_user._id }, jwtSecrete, { expiresIn: "1h" });
     res.status(200).json({ result: new_user, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong 😃" });
@@ -52,13 +52,13 @@ export const googleAuth = async (req: Request, res: Response): Promise<unknown> 
       if (email_exist) return res.status(400).json({ message: "User already exist." });
       const create_user = { name: payload?.name, email: payload?.email, imageUrl: payload?.picture, google_id: payload?.sub };
       const google_user = await User.create(create_user);
-      const token = jwt.sign({ email: google_user.email, _id: google_user._id }, jwtSecrete, { expiresIn: "1d" });
+      const token = jwt.sign({ email: google_user.email, _id: google_user._id }, jwtSecrete, { expiresIn: "1h" });
       res.status(200).json({ result: google_user, token });
     } else {
       const google_user = await User.findOne({ google_id: payload?.sub });
       if (!google_user) return res.status(400).json({ message: "User not found." });
       if (google_user && google_user?.google_id?.length < 1) return res.status(400).json({ message: "Not a google User" });
-      const token = jwt.sign({ email: google_user.email, _id: google_user._id }, jwtSecrete, { expiresIn: "1d" });
+      const token = jwt.sign({ email: google_user.email, _id: google_user._id }, jwtSecrete, { expiresIn: "1h" });
       res.status(200).json({ result: google_user, token });
     }
   } catch (error) {

@@ -1,21 +1,21 @@
-import React from "react";
-import useStyles from "./styles";
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@material-ui/core";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-import ThumbUpAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
+import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import ThumbUpAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts.actions";
+import useStyles from "./styles";
 
 dayjs.extend(relativeTime);
 
 const Post = ({ post, setCurrentId }) => {
+  const user = JSON.parse(localStorage.getItem("profile"));
   const classes = useStyles();
   const diapatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem("profile"));
 
   const Likes = () => {
     if (post.likes.length > 0) {
@@ -47,8 +47,8 @@ const Post = ({ post, setCurrentId }) => {
         <Typography variant="h6">{post?.name}</Typography>
         <Typography variant="body2">{dayjs(post.createdAt).fromNow()}</Typography>
       </div>
-      <div className={classes.overlay2}>
-        {user?.result && user?.result?._id === post?.creator && (
+      {user?.result?._id === post?.creator && (
+        <div className={classes.overlay2}>
           <Button
             style={{ color: "white" }}
             size="small"
@@ -58,8 +58,8 @@ const Post = ({ post, setCurrentId }) => {
           >
             <MoreHorizIcon fontSize="medium" />
           </Button>
-        )}
-      </div>
+        </div>
+      )}
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary">
           {post?.tags?.map((tag) => `#${tag} `)}
@@ -77,7 +77,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button size="small" disabled={!user?.result} color="primary" onClick={() => diapatch(likePost(post._id))}>
           <Likes />
         </Button>
-        {user?.result && user?.result?._id === post?.creator && (
+        {user?.result?._id === post?.creator && (
           <Button size="small" color="primary" onClick={() => diapatch(deletePost(post?._id))}>
             <DeleteIcon fontSize="small" />
             Delete
