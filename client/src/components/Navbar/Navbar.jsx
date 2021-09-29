@@ -30,7 +30,7 @@ const Navbar = () => {
         <Typography className={classes.heading} component={Link} to="/" variant="h2" align="center">
           Mems
         </Typography>
-        <img src="/images/favicon.ico" alt="memories_logo" width="80" height="80" className={classes.image} />
+        <img src="/images/128.png" alt="memories_logo" width="80" height="80" className={classes.image} />
       </div>
       <Toolbar className={classes.toolbar}>
         {user ? (

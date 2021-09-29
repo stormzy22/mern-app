@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import axios from "axios";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -17,8 +16,12 @@ axios.interceptors.request.use((req) => {
   }
   return req;
 });
-
 const strore = createStore(reducers, compose(applyMiddleware(thunk)));
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("/service-worker.js");
+  });
+}
 
 ReactDOM.render(
   <Provider store={strore}>
@@ -26,5 +29,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
-serviceWorkerRegistration.unregister();
