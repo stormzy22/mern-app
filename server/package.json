@@ -9,7 +9,6 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "ansi-regex": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.27.0",
     "cors": "^2.8.5",
