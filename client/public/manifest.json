@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "memories",
+  "name": "welcome to a place where we share memories",
   "icons": [
     {
       "src": "favicon.ico",
