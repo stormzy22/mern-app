@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
-import useStyles from "./styles";
 import decode from "jwt-decode";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import dayjs from "dayjs";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import useStyles from "./styles";
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
