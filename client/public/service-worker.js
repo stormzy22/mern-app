@@ -1,8 +1,6 @@
 const CACHE_NAME = "version-1";
 const urlsToCache = ["index.html", "offline.html"];
 
-console.log("hi");
-
 const self = this;
 
 // Install SW
@@ -32,6 +30,7 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) =>
       Promise.all(
+        // eslint-disable-next-line array-callback-return
         cacheNames.map((cacheName) => {
           if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName);
