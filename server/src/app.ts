@@ -25,6 +25,8 @@ app.use(cors());
 
 app.use("/api/v3", postRoute);
 app.use("/api/v3/user", userRoute);
+
+//Start server
 (async () => {
   try {
     await connectDB();
