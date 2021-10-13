@@ -5,6 +5,11 @@ import PostMemories from "../models/post.model";
 import mongoose from "mongoose";
 import { PostModel } from "../@types/types";
 
+type IQ = {
+  searchQuery: string;
+  tags: string;
+};
+
 //GET POST
 export const getPost = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -15,6 +20,20 @@ export const getPost = async (req: Request, res: Response): Promise<void> => {
     console.log(error);
   }
 };
+
+//GET POST BY SEARCH
+export const getPostBySearch = async (req: Request, res: Response): Promise<void> => {
+  const { searchQuery, tags } = <IQ>req.query;
+
+  try {
+    const title = new RegExp(searchQuery, "i");
+    const posts = await PostMemories.find({ $or: [{ title }, { tags: { $in: { tags: tags.split(",") } } }] });
+  } catch (error) {
+    res.status(404).json({ msg: error });
+    console.log(error);
+  }
+};
+
 // CREATE POST
 export const createPost = async (req: Request, res: Response): Promise<void> => {
   try {

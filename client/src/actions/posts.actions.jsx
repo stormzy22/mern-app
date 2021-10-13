@@ -1,9 +1,19 @@
 import * as api from "../api";
 import { CREATE, DELETE, FETCH_ALL, UPDATE } from "../constants/actionTypes";
+
 export const getPosts = () => async (dispatch) => {
   try {
     const { data } = await api.fetchPost();
     dispatch({ type: FETCH_ALL, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+  try {
+    const { data } = await api.fetchPostBySearch(searchQuery);
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
