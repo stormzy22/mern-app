@@ -41,7 +41,7 @@ const Post = ({ post, setCurrentId }) => {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={6}>
       <CardMedia className={classes?.media} image={`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/v1/${post.selectedFile}`} title={post.title} />
       <div className={classes.overlay}>
         <Typography variant="h6">{post?.name}</Typography>
@@ -70,7 +70,7 @@ const Post = ({ post, setCurrentId }) => {
       </Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {post?.message}
+          {post?.message.length >= 200 ? `${post?.message.slice(0, 200)} ...` : post?.message}
         </Typography>
       </CardContent>
       <CardActions className={classes?.cardActions}>

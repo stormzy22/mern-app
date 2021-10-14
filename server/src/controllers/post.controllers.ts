@@ -26,7 +26,8 @@ export const getPostBySearch = async (req: Request, res: Response): Promise<void
   const { searchQuery, tags } = <IQ>req.query;
   try {
     const title = new RegExp(searchQuery, "i");
-    const posts = await PostMemories.find({ $or: [{ title }, { tags: { $in: tags.split(",") } }] });
+    const posts = await PostMemories.find({ $or: [{ title }, { tags: { $in: tags.split(",") } }] }).sort({ createdAt: "desc" });
+    res.json({ data: posts });
   } catch (error) {
     res.status(404).json({ msg: error });
     console.log(error);
