@@ -1,9 +1,9 @@
 import cloudinary from "cloudinary";
 import { Request, Response } from "express";
-import { uploadImgToCloud } from "../helpers/upload.cloudinary";
-import PostMemories from "../models/post.model";
 import mongoose from "mongoose";
 import { PostModel } from "../@types/types";
+import { uploadImgToCloud } from "../helpers/upload.cloudinary";
+import PostMemories from "../models/post.model";
 
 type IQ = {
   searchQuery: string;
@@ -24,10 +24,9 @@ export const getPost = async (req: Request, res: Response): Promise<void> => {
 //GET POST BY SEARCH
 export const getPostBySearch = async (req: Request, res: Response): Promise<void> => {
   const { searchQuery, tags } = <IQ>req.query;
-
   try {
     const title = new RegExp(searchQuery, "i");
-    // const posts = await PostMemories.find({ $or: [{ title }, { tags: { $in: { tags: tags.split(",") } } }] });
+    const posts = await PostMemories.find({ $or: [{ title }, { tags: { $in: tags.split(",") } }] });
   } catch (error) {
     res.status(404).json({ msg: error });
     console.log(error);
