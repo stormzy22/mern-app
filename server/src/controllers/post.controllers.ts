@@ -12,9 +12,14 @@ type IQ = {
 
 //GET POST
 export const getPost = async (req: Request, res: Response): Promise<void> => {
+  const { page } = req.query;
   try {
-    const posts = await PostMemories.find().sort({ createdAt: "desc" });
-    res.status(200).json(posts);
+    const LIMIT = 8,
+      startIndex = (Number(page) - 1) * LIMIT,
+      total = await PostMemories.countDocuments({});
+
+    const posts = await PostMemories.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+    res.status(200).json({ data: posts, currentPage: page, numberOfPages: Math.ceil(total / LIMIT) });
   } catch (error: any) {
     res.status(404).json({ msg: error });
     console.log(error);
