@@ -10,8 +10,8 @@ type IQ = {
   tags: string;
 };
 
-//GET POST
-export const getPost = async (req: Request, res: Response): Promise<void> => {
+//GET POSTS
+export const getPosts = async (req: Request, res: Response): Promise<void> => {
   const { page } = req.query;
   try {
     const LIMIT = 8,
@@ -33,6 +33,18 @@ export const getPostBySearch = async (req: Request, res: Response): Promise<void
     const title = new RegExp(searchQuery, "i");
     const posts = await PostMemories.find({ $or: [{ title }, { tags: { $in: tags.split(",") } }] }).sort({ createdAt: "desc" });
     res.json({ data: posts });
+  } catch (error) {
+    res.status(404).json({ msg: error });
+    console.log(error);
+  }
+};
+
+//GET POST
+export const getPost = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  try {
+    const post = await PostMemories.findById(id);
+    res.status(200).json(post);
   } catch (error) {
     res.status(404).json({ msg: error });
     console.log(error);

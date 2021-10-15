@@ -3,5 +3,5 @@
   "tabWidth": 2,
   "semi": true,
   "singleQuote": false,
-  "printWidth": 10000
+  "printWidth": 1000000
 }
