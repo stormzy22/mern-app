@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, CardMedia, Typography, ButtonBase } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
@@ -9,13 +9,15 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts.actions";
 import useStyles from "./styles";
+import { useHistory } from "react-router-dom";
 
 dayjs.extend(relativeTime);
 
 const Post = ({ post, setCurrentId }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
-  const classes = useStyles();
-  const diapatch = useDispatch();
+  const classes = useStyles(),
+    diapatch = useDispatch(),
+    history = useHistory();
 
   const Likes = () => {
     if (post.likes.length > 0) {
@@ -40,39 +42,43 @@ const Post = ({ post, setCurrentId }) => {
     );
   };
 
+  const openPost = () => history.push(`/posts/${post?._id}`);
+
   return (
     <Card className={classes.card} raised elevation={6}>
-      <CardMedia className={classes?.media} image={`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/v1/${post.selectedFile}`} title={post.title} />
-      <div className={classes.overlay}>
-        <Typography variant="h6">{post?.name}</Typography>
-        <Typography variant="body2">{dayjs(post.createdAt).fromNow()}</Typography>
-      </div>
-      {user?.result?._id === post?.creator && (
-        <div className={classes.overlay2}>
-          <Button
-            style={{ color: "white" }}
-            size="small"
-            onClick={() => {
-              setCurrentId(post?._id);
-            }}
-          >
-            <MoreHorizIcon fontSize="medium" />
-          </Button>
+      <ButtonBase className={classes.cardAction} onClick={openPost}>
+        <CardMedia className={classes?.media} image={`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_NAME}/image/upload/v1/${post.selectedFile}`} title={post.title} />
+        <div className={classes.overlay}>
+          <Typography variant="h6">{post?.name}</Typography>
+          <Typography variant="body2">{dayjs(post.createdAt).fromNow()}</Typography>
         </div>
-      )}
-      <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary">
-          {post?.tags?.map((tag) => `#${tag} `)}
+        {user?.result?._id === post?.creator && (
+          <div className={classes.overlay2}>
+            <Button
+              style={{ color: "white" }}
+              size="small"
+              onClick={() => {
+                setCurrentId(post?._id);
+              }}
+            >
+              <MoreHorizIcon fontSize="medium" />
+            </Button>
+          </div>
+        )}
+        <div className={classes.details}>
+          <Typography variant="body2" color="textSecondary">
+            {post?.tags?.map((tag) => `#${tag} `)}
+          </Typography>
+        </div>
+        <Typography variant="h5" className={classes?.title} gutterBottom>
+          {post?.title}
         </Typography>
-      </div>
-      <Typography variant="h5" className={classes?.title} gutterBottom>
-        {post?.title}
-      </Typography>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {post?.message.length >= 200 ? `${post?.message.slice(0, 200)} ...` : post?.message}
-        </Typography>
-      </CardContent>
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {post?.message.length >= 200 ? `${post?.message.slice(0, 200)} ...` : post?.message}
+          </Typography>
+        </CardContent>
+      </ButtonBase>
       <CardActions className={classes?.cardActions}>
         <Button size="small" disabled={!user?.result} color="primary" onClick={() => diapatch(likePost(post._id))}>
           <Likes />
