@@ -5,7 +5,7 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import useStyles from "./styles";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { getPost } from "../../actions/posts.actions";
+import { getPost, getPostsBySearch } from "../../actions/posts.actions";
 import { Image } from "cloudinary-react";
 
 dayjs.extend(relativeTime);
@@ -21,9 +21,14 @@ const PostDetail = () => {
     dispatch(getPost(id));
   }, [id]);
 
+  useEffect(() => {
+    dispatch(getPostsBySearch({ search: "none", tags: post?.tags.join(",") }));
+  }, [post]);
+
   if (!post) return null;
 
-  // const openPost = (_id) => history.push(`/posts/${_id}`);
+  const openPost = (_id) => history.push(`/posts/${_id}`);
+  const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
   if (isLoading) {
     return (
@@ -69,6 +74,34 @@ const PostDetail = () => {
           <Image className={classes.media} cloudName={process.env.REACT_APP_CLOUDINARY_NAME} publicId={post?.selectedFile} alt={post?.title} draggable={false} />
         </div>
       </div>
+
+      {recommendedPosts?.length && (
+        <div className={classes.section}>
+          <Typography gutterBottom variant="h5">
+            You might also like:
+          </Typography>
+          <Divider />
+          <div className={classes.recommendedPosts}>
+            {recommendedPosts?.map(({ title, message, selectedFile, likes, name, _id }) => (
+              <div key={_id} style={{ margin: "20px", cursor: "pointer" }} onClick={() => openPost(_id)}>
+                <Typography gutterBottom variant="h6">
+                  {title}
+                </Typography>
+                <Typography gutterBottom variant="subtitle2">
+                  {name}
+                </Typography>
+                <Typography gutterBottom variant="subtitle2">
+                  {message.slice(0, 20)}..
+                </Typography>
+                <Typography gutterBottom variant="subtitle1">
+                  Likes: {likes?.length}
+                </Typography>
+                <Image width="200px" cloudName={process.env.REACT_APP_CLOUDINARY_NAME} publicId={selectedFile} alt={post?.title} draggable={false} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </Paper>
   );
 };
