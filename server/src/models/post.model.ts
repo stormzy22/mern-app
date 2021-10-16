@@ -10,6 +10,7 @@ const postSchema = new Schema<PostModel>(
     tags: [String],
     selectedFile: String,
     likes: { type: [String], default: [] },
+    comments: { type: [String], default: [] },
   },
   { timestamps: true }
 );

@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { getPost, getPostsBySearch } from "../../actions/posts.actions";
 import { Image } from "cloudinary-react";
+import CommentSection from "./CommentSection";
 
 dayjs.extend(relativeTime);
 
@@ -19,10 +20,12 @@ const PostDetail = () => {
 
   useEffect(() => {
     dispatch(getPost(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
     dispatch(getPostsBySearch({ search: "none", tags: post?.tags.join(",") }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
 
   if (!post) return null;
@@ -67,7 +70,7 @@ const PostDetail = () => {
             <strong>Realtime Chat - coming soon!</strong>
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
-          {/* <CommentSection post={post} /> */}
+          <CommentSection post={post} />
           <Divider style={{ margin: "20px 0" }} />
         </div>
         <div className={classes.imageSection}>

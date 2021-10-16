@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createPost, deletePost, getPosts, likePost, updatePost, getPostBySearch, getPost } from "../controllers/post.controllers";
+import { createPost, deletePost, getPosts, likePost, updatePost, getPostBySearch, getPost, commentPost } from "../controllers/post.controllers";
 import isAuth from "../middleware/auth.middleware";
 const router = Router();
 
@@ -10,5 +10,6 @@ router.post("/", isAuth, createPost);
 router.patch("/:id", isAuth, updatePost);
 router.delete("/:id", isAuth, deletePost);
 router.patch("/:id/likePost", isAuth, likePost);
+router.patch("/:id/commentPost", isAuth, commentPost);
 
 export default router;

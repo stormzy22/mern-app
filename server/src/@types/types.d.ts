@@ -13,6 +13,7 @@ export interface PostModel extends Post, Document {
   selectedFile: string;
   creator: string;
   name: string;
+  comments: string[];
 }
 
 export interface UserModel extends User, Document {

@@ -123,3 +123,19 @@ export const likePost = async (req: Request, res: Response): Promise<unknown> =>
     res.json(error);
   }
 };
+
+//COMMENT POST
+
+export const commentPost = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const { value } = req.body;
+  try {
+    const post = (await PostMemories.findById(id)) as PostModel;
+    post?.comments.push(value);
+    const updatedPost = await PostMemories.findByIdAndUpdate(id, post, { new: true });
+    res.json(updatedPost);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
