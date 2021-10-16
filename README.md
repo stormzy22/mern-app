@@ -10,12 +10,12 @@ Create a .env file in the root of the client dir
 <pre>
 REACT_APP_AXIOS_BASE_URL=<b><a>http://localhost:8000/api/v3</a></b>
 
-REACT_APP_CLOUDINARY_NAME =<b>your cloudinary cloud name</b>
+REACT_APP_CLOUDINARY_NAME=<b>your cloudinary cloud name</b>
 </pre>
 
 <div > To start the client side open your terminal then cd into the client dir and run the following command::
 <br/>
-<pre>yarn start || npm run start</pre>
+<pre><h3>yarn start || npm run start</h3></pre>
 </div>
 <br/>
 <h2>Step 2:</h2>
