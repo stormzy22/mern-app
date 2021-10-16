@@ -50,5 +50,5 @@ GOOGLE_CLIENT_ID=
 </pre>
 <h3>
 To start the server run the following command:
-<pre>yarn start or npm run start</pre>
+<pre>yarn start || npm run start</pre>
 </h3>
