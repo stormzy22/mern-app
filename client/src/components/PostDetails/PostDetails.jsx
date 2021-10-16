@@ -71,7 +71,7 @@ const PostDetail = () => {
           <Divider style={{ margin: "20px 0" }} />
         </div>
         <div className={classes.imageSection}>
-          <Image className={classes.media} cloudName={process.env.REACT_APP_CLOUDINARY_NAME} publicId={post?.selectedFile} alt={post?.title} draggable={false} />
+          <Image className={classes.media} cloudName={process.env.REACT_APP_CLOUDINARY_NAME} publicId={post?.selectedFile} alt={post?.title} draggable={false} width="300px" />
         </div>
       </div>
 

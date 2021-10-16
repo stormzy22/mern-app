@@ -53,7 +53,7 @@ const Post = ({ post, setCurrentId }) => {
           <Typography variant="body2">{dayjs(post.createdAt).fromNow()}</Typography>
         </div>
         {user?.result?._id === post?.creator && (
-          <div className={classes.overlay2}>
+          <div className={classes.overlay2} name="edit">
             <Button
               style={{ color: "white" }}
               size="small"
