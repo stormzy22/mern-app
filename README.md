@@ -1,5 +1,5 @@
 <h2>
-<button><a href="https://github.com/adrianhajdin/project_mern_memories.git"><h4>Click Here</h4></a></button> for the original code.
+<a href="https://github.com/adrianhajdin/project_mern_memories.git">Click Here</a></button> for the original code.
 <br/>
 </h2>
 
