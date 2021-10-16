@@ -1,5 +1,11 @@
-<h1><u>Reqirements</u></h1>
+<h2>
+<button><a href="https://github.com/adrianhajdin/project_mern_memories.git"><h4>Click Here</h4></a></button> for the original code.
+<br/>
+</h2>
 
+<br/>
+
+<h1><u>Reqirements</u></h1>
 <h2>Step 1:</h2>
 <h3>
 Create a .env file in the root of the client dir
