@@ -5,7 +5,7 @@ import ThumbUpAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts.actions";
 import useStyles from "./styles";
@@ -14,22 +14,34 @@ import { useHistory } from "react-router-dom";
 dayjs.extend(relativeTime);
 
 const Post = ({ post, setCurrentId }) => {
-  const user = JSON.parse(localStorage.getItem("profile"));
-  const classes = useStyles(),
+  const user = JSON.parse(localStorage.getItem("profile")),
+    classes = useStyles(),
     diapatch = useDispatch(),
-    history = useHistory();
+    history = useHistory(),
+    [likes, setLikes] = useState(post?.likes),
+    userId = user?.result?._id,
+    hasLikedPost = post.likes.find((like) => like === userId);
+
+  const handleLike = async () => {
+    diapatch(likePost(post._id));
+    if (hasLikedPost) {
+      setLikes(post.likes.filter((id) => id !== userId));
+    } else {
+      setLikes([...post?.likes, userId]);
+    }
+  };
 
   const Likes = () => {
-    if (post.likes.length > 0) {
-      return post.likes.find((like) => like === user?.result?._id) ? (
+    if (likes?.length > 0) {
+      return likes?.find((like) => like === userId) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
-          &nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          &nbsp;{likes?.length > 2 ? `You and ${likes?.length - 1} others` : `${likes?.length} like${likes?.length > 1 ? "s" : ""}`}
         </>
       ) : (
         <>
           <ThumbUpAltOutlined fontSize="small" />
-          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+          &nbsp;{likes?.length} {likes?.length === 1 ? "Like" : "Likes"}
         </>
       );
     }
@@ -80,7 +92,7 @@ const Post = ({ post, setCurrentId }) => {
         </CardContent>
       </ButtonBase>
       <CardActions className={classes?.cardActions}>
-        <Button size="small" disabled={!user?.result} color="primary" onClick={() => diapatch(likePost(post._id))}>
+        <Button size="small" disabled={!user?.result} color="primary" onClick={handleLike}>
           <Likes />
         </Button>
         {user?.result?._id === post?.creator && (

@@ -1,4 +1,5 @@
 <h2>
+Pls note that this project is a rebuild. <br/>
 <a href="https://github.com/adrianhajdin/project_mern_memories.git">Click Here</a></button> for the original code.
 <br/>
 </h2>

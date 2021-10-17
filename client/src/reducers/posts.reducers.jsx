@@ -1,7 +1,15 @@
-import { CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, FETCH_POST, START_LOADING, UPDATE } from "../constants/actionTypes";
+import { COMMENT, CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, FETCH_POST, START_LOADING, UPDATE } from "../constants/actionTypes";
 
 const reducer = (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {
+    case COMMENT:
+      return {
+        ...state,
+        posts: state.posts?.map((post) => {
+          if (post._id === action.payload._id) return action.payload;
+          return post;
+        }),
+      };
     case START_LOADING:
       return { ...state, isLoading: true };
     case END_LOADING:
