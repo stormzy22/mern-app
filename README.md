@@ -9,10 +9,10 @@ Pls note that this project is a rebuild. <br/>
 <h1><u>Reqirements</u></h1>
 <h2>Step 1:</h2>
 <h3>
-Create a .env file in the root of the client dir
+Cd inside the client dir and
+create a .env file in the root of the client dir then provide the following credential in the .env file
 </h3>
 <br/>
-<h3>The .env would include the following::</h3>
 
 <pre>
 REACT_APP_AXIOS_BASE_URL=<b><a>http://localhost:8000/api/v3</a></b>
@@ -27,11 +27,10 @@ REACT_APP_CLOUDINARY_NAME=<b>your cloudinary cloud name</b>
 <br/>
 <h2>Step 2:</h2>
 <h3>
-Create a .env file in the root of the server dir
+Cd inside the root of the server and
+create a .env file in the root of the server dir then provide the following credential in the .env file
 </h3>
 <br/>
-<h3>The .env would include the following::</h3>
-
 <pre>
 JWT_SECRETE=
 
@@ -54,8 +53,23 @@ CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRETE=
 
 GOOGLE_CLIENT_ID=
+
 </pre>
 <h3>
+
+<ol>
+<li>First run the following command to get the compiled version which is in <b>javascript</b>. <br/>
+Note:: <mark>if you don't run the first command you can't run the second command successfully</mark>
+<pre>yarn build || npm run build</pre></li>
+<li>
 To start the server run the following command:
-<pre>yarn start || npm run start</pre>
+<pre>yarn start || npm run start</pre></li>
+
+<li>
+To start the typescript version of the server run .
+<br/>
+this command doesn't require the first command to run.
+<pre>yarn dev || npm run dev</pre>
+</li>
+</ol>
 </h3>
