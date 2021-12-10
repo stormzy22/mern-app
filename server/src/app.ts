@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 import cloudinary from "cloudinary";
 import cors from "cors";
-import { connectDB } from "./db/connect.db";
+import connectDB from "./db/connect.db";
 import postRoute from "./routes/post.route";
 import userRoute from "./routes/users.route";
 
