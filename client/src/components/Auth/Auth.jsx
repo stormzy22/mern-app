@@ -90,7 +90,6 @@ const Auth = () => {
             onSuccess={googleSuccess}
             onFailure={googleFailure}
             cookiePolicy="single_host_origin"
-            scope="https://www.googleapis.com/auth/youtube.readonly"
           />
           <Grid container justifyContent="flex-end">
             <Grid item>
