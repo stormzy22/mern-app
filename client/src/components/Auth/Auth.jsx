@@ -45,6 +45,7 @@ const Auth = () => {
 
   //Google
   const googleSuccess = async (res) => {
+    console.log(res);
     const token = res?.tokenId;
     try {
       dispatch(googleAuth(token, isSignup, history));
@@ -89,6 +90,7 @@ const Auth = () => {
             onSuccess={googleSuccess}
             onFailure={googleFailure}
             cookiePolicy="single_host_origin"
+            // scope="https://www.googleapis.com/auth/youtube.readonly"
           />
           <Grid container justifyContent="flex-end">
             <Grid item>
